@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+    <style>
+        /* Background & section styling */
+        .contact {
+            padding: 6rem 2rem;
+            background: url('https://images.pexels.com/photos/5082576/pexels-photo-5082576.jpeg?auto=compress&cs=tinysrgb&w=1920') no-repeat center center/cover;
+            background-attachment: fixed;
+            text-align: center;
+            color: #fff;
+            position: relative;
+        }
+
+        .contact-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 0, 0, 0.5), rgba(230, 57, 70, 0.3));
+            z-index: 1;
+            opacity: 0;
+            animation: fadeInOverlay 2s ease-out forwards;
+        }
+
+        @keyframes fadeInOverlay {
+            to { opacity: 1; }
+        }
+
+        .contact h2 {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(45deg, #d00000, #e63946, #ff9999);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .user-box {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(18px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            position: relative;
+            z-index: 2;
+            text-align: left;
+            animation: formFadeIn 1.2s ease-out;
+            overflow: hidden;  /* Ensures content stays inside the box */
+        }
+
+        @keyframes formFadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-box p {
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+            padding: 0.3rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-box p span {
+            font-weight: bold;
+            color: #ffe6e6;
+        }
+
+        .subject-box {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid #fff;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact {
+                padding: 4rem 1rem;
+            }
+
+            .user-box {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="contact">
+        <div class="contact-overlay"></div>
+        <h2>User Information</h2>
+
+        {% for user in info %}
+        <div class="user-box">
+            <p><span>Name:</span> {{ user.name }}</p>
+            <p><span>Phone:</span> {{ user.phone }}</p>
+            <p><span>Email:</span> {{ user.email }}</p>
+            <p><span>Subject:</span> <input type="text" class="subject-box" value="{{ user.subject }}" readonly /></p>
+            <p><span>Service:</span> {{ user.service }}</p>
+            <p><span>Date & Time:</span> {{ user.created_at|date:"F j, Y, g:i a" }}</p>
+        </div>
+        {% empty %}
+        <p style="color: white;">No users found.</p>
+        {% endfor %}
+    </section>
+</body>
+</html>
